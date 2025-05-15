@@ -1,17 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Navigation from './componenets/Navbar'
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import FeedPage from "./Pages/FeedPage";
+import CreateMemePage from "./Pages/CreateMemePage";
+import DashboardPage from "./Pages/DashboardPage";
+import LoginPage from "./Pages/LoginPage";
+import RegisterPage from "./Pages/RegisterPage";
+import Navigation from "./componenets/Navbar";
+import MemeDetailPage from "./Pages/MemeDetailPage";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
+    <Router>
       <Navigation/>
-    </>
-  )
+      <Routes>
+        <Route path="/" element={<FeedPage/>} />
+        <Route path="/create" element={<CreateMemePage/>} />
+        <Route path="/meme/:id" element={<MemeDetailPage/>} />
+        <Route path="/dashboard" element={<DashboardPage/>} />
+        <Route path="/login" element={<LoginPage/>} />
+        <Route path="/register" element={<RegisterPage/>} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
