@@ -1,5 +1,5 @@
 import React from "react";
-import MemeCard from "../componenets/Memecard";
+import MemeCard from "../components/Memecard";
 
 const memes = [
   {

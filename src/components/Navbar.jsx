@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu } from "lucide-react";
 
 function Navigation() {
+  // why use locations ? indexed of NavLink
   const location = useLocation();
 
   const navItems = [
