@@ -2,9 +2,8 @@
 
 import React, { useState } from 'react';          // 1. Import React
 import { createUserWithEmailAndPassword } from 'firebase/auth';  // 2. Firebase Signup
-// import { auth } from './firebase';               // 3. Firebase Config
 import { useNavigate } from 'react-router-dom';  // 4. Redirect After Signup
-import { auth } from './firebase';
+import { auth } from '../firebase/firebase';
 
 const SignupForm = () => {
   // 5. State Handling
