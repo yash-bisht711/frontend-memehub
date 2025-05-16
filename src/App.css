@@ -1,1 +1,28 @@
 @import "tailwindcss";
+
+body {
+    @apply bg-surface-a0
+}
+
+@theme {
+    --color-primary-a0: #f02c0e;
+    --color-primary-a10: #f74f2b;
+    --color-primary-a20: #fc6945;
+    --color-primary-a30: #ff815e;
+    --color-primary-a40: #ff9777;
+    --color-primary-a50: #ffac91;
+
+    --color-surface-a0: #121212;
+    --color-surface-a10: #282828;
+    --color-surface-a20: #3f3f3f;
+    --color-surface-a30: #575757;
+    --color-surface-a40: #717171;
+    --color-surface-a50: #8b8b8b;
+
+    --color-surface-tonal-a0: #271813;
+    --color-surface-tonal-a10: #3c2d28;
+    --color-surface-tonal-a20: #52443f;
+    --color-surface-tonal-a30: #685c58;
+    --color-surface-tonal-a40: #807571;
+    --color-surface-tonal-a50: #988f8c;
+}

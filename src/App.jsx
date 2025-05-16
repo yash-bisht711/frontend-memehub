@@ -7,6 +7,7 @@ import LoginPage from "./Pages/LoginPage";
 import RegisterPage from "./Pages/RegisterPage";
 import Navigation from "./components/Navbar";
 import MemeDetailPage from "./Pages/MemeDetailPage";
+import './App.css'
 
 function App() {
   return (
