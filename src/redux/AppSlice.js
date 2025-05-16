@@ -7,7 +7,7 @@ const initialState = {
     // Add your initial state properties here
     isLoading: false,
     error: null,
-    // Example: user: null,
+    user: null,
 };
 
 // Async thunk for Firebase login
@@ -102,11 +102,12 @@ const appSlice = createSlice({
             })
             .addCase(checkUserLoggedIn.fulfilled, (state, action) => {
                 state.isLoading = false;
-                // Example: state.user = action.payload;
+                state.user = action.payload;
             })
             .addCase(checkUserLoggedIn.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
+                state.user = null;
             });
 
     }
