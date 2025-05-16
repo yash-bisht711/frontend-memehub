@@ -1,5 +1,6 @@
 import React from "react";
-import MemeCard from "../componenets/Memecard";
+import MemeCard from "../components/Memecard";
+import MainBody from "../components/MainBody";
 
 const memes = [
   {
@@ -19,11 +20,11 @@ const memes = [
 
 function FeedPage() {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+    <MainBody>
       {memes.map((meme) => (
         <MemeCard key={meme.id} meme={meme} />
       ))}
-    </div>
+    </MainBody>
   );
 }
 export default FeedPage
