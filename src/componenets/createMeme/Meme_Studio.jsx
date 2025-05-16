@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { generateCaption } from "../util/geminiApi";
 import { useDispatch, useSelector } from "react-redux";
 
-function CreateMemePage() {
+function CreateMemePageStudio() {
   const navigate = useNavigate();
   const {} = useSelector((state)=>state)
   const dispatch = useDispatch()
@@ -148,4 +148,4 @@ function CreateMemePage() {
   );
 }
 
-export default CreateMemePage;
+export default CreateMemePageStudio
