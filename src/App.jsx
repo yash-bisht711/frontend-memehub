@@ -23,8 +23,8 @@ function App() {
         <Route path="/create" element={<CreateMemePage />} />
         <Route path="/meme/:id" element={<MemeDetailPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
-        // <Route path="/login" element={<LoginPage />} />
-        // <Route path="/register" element={<RegisterPage />} />
+        {/* <Route path="/login" element={<LoginPage />} /> */}
+        {/* <Route path="/register" element={<RegisterPage />} /> */}
         <Route path="/signup" element={<SignupForm />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="*" element={<h1>404</h1>} />

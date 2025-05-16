@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 body {
-    @apply bg-surface-a0
+    @apply bg-surface-a0 text-white
 }
 
 @theme {

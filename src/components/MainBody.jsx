@@ -1,4 +1,5 @@
 import LeftSideNav from "./LeftSideNav"
+import RightSideNav from "./RightSideNav"
 
 function MainBody({ children }) {
 
@@ -8,6 +9,7 @@ function MainBody({ children }) {
             <div className='col-span-2 m-3'>
                 {children}
             </div>
+            <RightSideNav />
         </div>
     )
 }
