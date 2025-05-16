@@ -10,11 +10,11 @@ function Navigation() {
         Meme Stream
       </Link>
 
-      <div className="flex items-center bg-surface-a20/30 rounded-full p-2">
+      <div className="flex items-center bg-surface-a20/30 rounded-full p-2 hover:bg-surface-a10 duration-300 ease-in-out active:bg-amber-100">
         <Search className="text-white/30 w-6 h-6" />
         <input
           type="text"
-          className="w-100 ps-1 outline-0"
+          className="w-120 ps-1 outline-0"
           placeholder="Search Meme"
         />
       </div>
