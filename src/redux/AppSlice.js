@@ -36,6 +36,7 @@ export const loginWithFirebase = createAsyncThunk(
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log(userCredential.user)
       return userCredential.user;
     } catch (error) {
       return rejectWithValue(getFriendlyError(error));

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { generateCaption } from "../util/geminiApi";
+import { generateCaptions } from "../util/geminiApi";
 import { useDispatch, useSelector } from "react-redux";
 
 function CreateMemePageStudio() {
