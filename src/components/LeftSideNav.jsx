@@ -4,7 +4,7 @@ function LeftSideNav() {
 
     const navItems = [
         { name: "Feed", path: "/" },
-        { name: "Create Meme", path: "/create" },
+        { name: "Create Meme", path: "/Create" },
         { name: "Dashboard", path: "/dashboard" },
     ];
 

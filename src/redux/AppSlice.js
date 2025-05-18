@@ -36,8 +36,8 @@ export const loginWithFirebase = createAsyncThunk(
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log(userCredential.user)
-      return userCredential.user;
+      console.log(userCredential.user.email)
+      return userCredential.user.email;
     } catch (error) {
       return rejectWithValue(getFriendlyError(error));
     }
@@ -135,7 +135,7 @@ const appSlice = createSlice({
         state.isLoading = false;
         state.user = null;
         state.error = action.payload;
-        state.isSessionChecked = true;
+        state.isSessionChecked = false;
       })
 
       // Logout
