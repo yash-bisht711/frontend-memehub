@@ -3,9 +3,9 @@ import { NavLink } from "react-router-dom";
 function LeftSideNav() {
 
     const navItems = [
-        { name: "Feed", path: "/" },
+        { name: "Home Page", path: "/" },
         { name: "Create Meme", path: "/Create" },
-        { name: "Dashboard", path: "/dashboard" },
+        { name: "User Dashboard", path: "/dashboard" },
     ];
 
     const topFilter = [

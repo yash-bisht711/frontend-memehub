@@ -6,7 +6,7 @@ export default function MemeCard({ meme }) {
   const { allUserDetails } = useSelector(state => state.app)
 
   return (
-    <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow overflow-hidden border border-gray-200 dark:border-zinc-700 hover:shadow-lg transition-all duration-200 w-170 mx-auto">
+    <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow overflow-hidden border border-gray-200 dark:border-zinc-700 hover:shadow-lg transition-all duration-200 w-150 mx-auto my-5">
       <Link to={`/meme/${meme.id}`}>
         <div className="relative aspect-square w-full">
           <img
