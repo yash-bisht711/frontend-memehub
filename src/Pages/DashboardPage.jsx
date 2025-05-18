@@ -25,9 +25,20 @@ const UserDashboard = () => {
       });
   }, []);
 
+  // const sortedMemes = [...memes].sort((a, b) => {
+  //   if (sortBy === "date") return b.createdAt - a.createdAt;
+  //   if (sortBy === "votes") return b.votes - a.votes;
+  //   return 0;
+  // });
   const sortedMemes = [...memes].sort((a, b) => {
-    if (sortBy === "date") return b.createdAt - a.createdAt;
-    if (sortBy === "votes") return b.votes - a.votes;
+    if (sortBy === "date") {
+      return new Date(b.timestamp) - new Date(a.timestamp);
+    }
+    if (sortBy === "votes") {
+      const aVotes = (a.up_vote ?? 0) - (a.down_vote ?? 0);
+      const bVotes = (b.up_vote ?? 0) - (b.down_vote ?? 0);
+      return bVotes - aVotes;
+    }
     return 0;
   });
 
