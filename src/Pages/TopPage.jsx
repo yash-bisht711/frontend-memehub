@@ -34,7 +34,7 @@ function TopPage() {
         }
     }, [time])
 
-    useEffect(() => console.log(posts), [posts])
+    // useEffect(() => console.log(posts), [posts])
 
     return (
         <MainBody>

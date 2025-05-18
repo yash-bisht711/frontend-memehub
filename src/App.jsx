@@ -9,7 +9,6 @@ import PrivateRoute from "../src/components/PrivateRoutes";
 import "./App.css";
 import LoginPage from "./Pages/LoginPage";
 import SignupPage from "./Pages/SignUpPage";
-import MainBody from "./components/MainBody";
 import TopPage from "./Pages/TopPage";
 
 function App() {
