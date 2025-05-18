@@ -23,7 +23,7 @@ function App() {
         <Route path="/dashboard" element={<PrivateRoute><DashboardPage /></PrivateRoute>} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        <Route path="*" element={<h1 className="text-center text-2xl mt-8">404 - Page Not Found</h1>} />
+        <Route path="*" element={<h1 className="bg-surface-a0 text-center font-bold text-4xl mt-8">404 - Page Not Found</h1>} />
       </Routes>
     </Router>
   );
