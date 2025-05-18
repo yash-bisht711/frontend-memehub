@@ -3,12 +3,16 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { loginUser, registerUser } from '../firebase/firebaseUtils';
 import { auth } from '../firebase/firebase';
 import { signOut } from 'firebase/auth';
+import axios from 'axios';
 
 const initialState = {
   isLoading: false,
   error: null,
   user: null,
   isSessionChecked: false,
+  search: '',
+  posts: [],
+  allUserDetails: {},
 };
 
 const getFriendlyError = (error) => {
@@ -60,12 +64,12 @@ export const checkUserLoggedIn = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const user = auth.currentUser;
-      return {
+      return user ? {
         uid: user.uid,
         email: user.email,
         displayName: user.displayName,
         photoURL: user.photoURL,
-      } || null;
+      } : null;
     } catch (error) {
       return rejectWithValue(getFriendlyError(error));
     }
@@ -84,6 +88,31 @@ export const logoutFirebase = createAsyncThunk(
   }
 );
 
+export const getPosts = createAsyncThunk(
+  'app/getPosts',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get('https://backend-memehub-production.up.railway.app/api/posts/');
+      const data = response.data;
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to fetch posts');
+    }
+  }
+)
+
+export const getAllUsers = createAsyncThunk(
+  'app/getAllUsers',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get('https://backend-memehub-production.up.railway.app/api/users/');
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to fetch users');
+    }
+  }
+)
+
 const appSlice = createSlice({
   name: 'app',
   initialState,
@@ -91,6 +120,9 @@ const appSlice = createSlice({
     clearError(state) {
       state.error = null;
     },
+    searchPost(state, action) {
+      state.search = action.payload
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -130,9 +162,40 @@ const appSlice = createSlice({
       .addCase(logoutFirebase.fulfilled, (state) => {
         state.user = null;
         state.isLoading = false;
-      });
+      })
+      .addCase(getPosts.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getPosts.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.posts = action.payload;
+      })
+      .addCase(getPosts.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(getAllUsers.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getAllUsers.fulfilled, (state, action) => {
+        state.isLoading = false;
+        // Transform array of users to object with email as key
+        state.allUserDetails = Array.isArray(action.payload)
+          ? action.payload.reduce((acc, user) => {
+              const { email, ...rest } = user;
+              if (email) acc[email] = rest;
+              return acc;
+            }, {})
+          : {};
+      })
+      .addCase(getAllUsers.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
   },
 });
 
-export const { clearError } = appSlice.actions;
+export const { clearError, searchPost } = appSlice.actions;
 export default appSlice.reducer;
