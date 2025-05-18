@@ -19,7 +19,7 @@ export default function MemeCard({ meme }) {
 
       <div className="p-4">
         <div className="text-sm text-gray-500 dark:text-gray-400 mb-2 flex justify-between">
-          <span>👤 {allUserDetails[meme.created_by].handle}</span>
+          <span>👤 {allUserDetails[meme.created_by]?.handle}</span>
           <span>{new Date(meme.timestamp).toLocaleDateString()}</span>
         </div>
 
