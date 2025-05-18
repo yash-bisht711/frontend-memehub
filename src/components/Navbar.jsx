@@ -1,7 +1,29 @@
 import { Search } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useRef } from "react";
+import { useDispatch } from "react-redux";
+import { searchPost } from "../redux/AppSlice";
+
 
 function Navigation() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const debounceTimeout = useRef(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    navigate('/')
+
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current);
+    }
+
+    debounceTimeout.current = setTimeout(() => {
+      dispatch(searchPost(value))
+    }, 400);
+  }
 
   return (
     <nav className="bg-surface-a0/90 backdrop-blur border-b border-surface-a30 shadow sticky top-0 z-50 p-2 px-6 flex justify-between">
@@ -10,12 +32,14 @@ function Navigation() {
         Meme Stream
       </Link>
 
-      <div className="flex items-center bg-surface-a20/30 rounded-full p-2 hover:bg-surface-a10 duration-300 ease-in-out active:bg-amber-100">
+      <div className="flex items-center bg-surface-a20/30 rounded-full p-2 hover:bg-surface-a10 duration-300 ease-in-out">
         <Search className="text-white/30 w-6 h-6" />
         <input
           type="text"
           className="w-120 ps-1 outline-0"
           placeholder="Search Meme"
+          value={searchTerm}
+          onChange={handleSearchChange}
         />
       </div>
 
