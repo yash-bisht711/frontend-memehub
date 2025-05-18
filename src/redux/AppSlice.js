@@ -2,7 +2,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { loginUser, registerUser } from '../firebase/firebaseUtils';
 import { auth } from '../firebase/firebase';
-import { signOut } from 'firebase/auth';
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import axios from 'axios';
 
 const initialState = {
