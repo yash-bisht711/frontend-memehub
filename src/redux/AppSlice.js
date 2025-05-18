@@ -29,13 +29,9 @@ export const loginWithFirebase = createAsyncThunk(
   'app/loginWithFirebase',
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const user = await loginUser(email, password);
-      return {
-        uid: user.uid,
-        email: user.email,
-        displayName: user.displayName,
-        photoURL: user.photoURL,
-      };
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log(userCredential.user.email)
+      return userCredential.user.email;
     } catch (error) {
       return rejectWithValue(getFriendlyError(error));
     }
@@ -157,7 +153,7 @@ const appSlice = createSlice({
       .addCase(checkUserLoggedIn.rejected, (state, action) => {
         state.user = null;
         state.error = action.payload;
-        state.isSessionChecked = true;
+        state.isSessionChecked = false;
       })
       .addCase(logoutFirebase.fulfilled, (state) => {
         state.user = null;

@@ -26,3 +26,15 @@ body {
     --color-surface-tonal-a40: #807571;
     --color-surface-tonal-a50: #988f8c;
 }
+
+.roboto-font {
+  font-family: 'Roboto', sans-serif;
+}
+
+.comic-font {
+  font-family: 'Comic Neue', cursive;
+}
+
+.impact-font {
+  font-family: 'Impact', sans-serif;
+}

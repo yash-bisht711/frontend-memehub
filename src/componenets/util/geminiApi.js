@@ -1,19 +1,19 @@
 import axios from "axios";
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
+const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
 
 
 export async function generateCaptions(promptText, count = 3) {
   try {
     const response = await axios.post(
-      `${GEMINI_API_URL}?key=${GEMINI_API_KEY}`,
+      GEMINI_API_URL,
       {
         contents: [
           {
             parts: [
               {
-                text: `Suggest ${count} short, funny meme captions for: "${promptText}". Return as a list.`
+                text: `Suggest ${count} super-short and one-word, funny meme captions or hash-tags for: "${promptText}". Return hash-tags as a list.`
               }
             ]
           }
