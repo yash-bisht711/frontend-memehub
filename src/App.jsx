@@ -9,6 +9,8 @@ import PrivateRoute from "../src/components/PrivateRoutes";
 import "./App.css";
 import LoginPage from "./Pages/LoginPage";
 import SignupPage from "./Pages/SignUpPage";
+import MainBody from "./components/MainBody";
+import TopPage from "./Pages/TopPage";
 
 function App() {
   return (
@@ -16,31 +18,13 @@ function App() {
       <Navigation />
       <Routes>
         <Route path="/" element={<FeedPage />} />
-        <Route
-          path="/Create"
-          element={
-            <PrivateRoute>
-              <CreateMemePage />
-            </PrivateRoute>
-          }
-        />
+        <Route path="/top/:time" element={<TopPage />} />
+        <Route path="/Create" element={<PrivateRoute><CreateMemePage /></PrivateRoute>} />
         <Route path="/meme/:id" element={<MemeDetailPage />} />
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <DashboardPage />
-            </PrivateRoute>
-          }
-        />
+        <Route path="/dashboard" element={<PrivateRoute><DashboardPage /></PrivateRoute>} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        <Route
-          path="*"
-          element={
-            <h1 className="text-center text-2xl mt-8">404 - Page Not Found</h1>
-          }
-        />
+        <Route path="*" element={<h1 className="text-center text-2xl mt-8">404 - Page Not Found</h1>} />
       </Routes>
     </Router>
   );
