@@ -1,36 +1,30 @@
 // redux/appSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { auth } from "../firebase/firebase";
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signOut
-} from "firebase/auth";
+import { loginUser, registerUser } from '../firebase/firebaseUtils';
+import { auth } from '../firebase/firebase';
+import { signOut } from 'firebase/auth';
+import axios from 'axios';
 
 const initialState = {
   isLoading: false,
   error: null,
   user: null,
   isSessionChecked: false,
+  search: '',
+  posts: [],
+  allUserDetails: {},
 };
 
-// Helper function for friendly error messages
 const getFriendlyError = (error) => {
   switch (error.code) {
-    case 'auth/user-not-found':
-      return 'No user found with this email.';
-    case 'auth/wrong-password':
-      return 'Incorrect password.';
-    case 'auth/email-already-in-use':
-      return 'Email is already in use.';
-    case 'auth/weak-password':
-      return 'Password should be at least 6 characters.';
-    default:
-      return error.message;
+    case 'auth/user-not-found': return 'No user found with this email.';
+    case 'auth/wrong-password': return 'Incorrect password.';
+    case 'auth/email-already-in-use': return 'Email is already in use.';
+    case 'auth/weak-password': return 'Password should be at least 6 characters.';
+    default: return error.message;
   }
 };
 
-// Thunk to login user
 export const loginWithFirebase = createAsyncThunk(
   'app/loginWithFirebase',
   async ({ email, password }, { rejectWithValue }) => {
@@ -44,33 +38,40 @@ export const loginWithFirebase = createAsyncThunk(
   }
 );
 
-// Thunk to sign up user
 export const signUpWithFirebase = createAsyncThunk(
   'app/signUpWithFirebase',
-  async ({ email, password }, { rejectWithValue }) => {
+  async ({ email, password, name, profilePicture }, { rejectWithValue }) => {
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      return userCredential.user;
+      const user = await registerUser(email, password, name, profilePicture);
+      return {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+      };
     } catch (error) {
       return rejectWithValue(getFriendlyError(error));
     }
   }
 );
 
-// Thunk to check if user is logged in (one-time check)
 export const checkUserLoggedIn = createAsyncThunk(
   'app/checkUserLoggedIn',
   async (_, { rejectWithValue }) => {
     try {
       const user = auth.currentUser;
-      return user || null;
+      return user ? {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+      } : null;
     } catch (error) {
       return rejectWithValue(getFriendlyError(error));
     }
   }
 );
 
-// Thunk to logout user
 export const logoutFirebase = createAsyncThunk(
   'app/logoutFirebase',
   async (_, { rejectWithValue }) => {
@@ -83,6 +84,31 @@ export const logoutFirebase = createAsyncThunk(
   }
 );
 
+export const getPosts = createAsyncThunk(
+  'app/getPosts',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get('https://backend-memehub-production.up.railway.app/api/posts/');
+      const data = response.data;
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to fetch posts');
+    }
+  }
+)
+
+export const getAllUsers = createAsyncThunk(
+  'app/getAllUsers',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get('https://backend-memehub-production.up.railway.app/api/users/');
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to fetch users');
+    }
+  }
+)
+
 const appSlice = createSlice({
   name: 'app',
   initialState,
@@ -90,10 +116,12 @@ const appSlice = createSlice({
     clearError(state) {
       state.error = null;
     },
+    searchPost(state, action) {
+      state.search = action.payload
+    }
   },
   extraReducers: (builder) => {
     builder
-      // Login
       .addCase(loginWithFirebase.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -106,8 +134,6 @@ const appSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-
-      // Sign up
       .addCase(signUpWithFirebase.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -120,38 +146,52 @@ const appSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-
-      // Check logged-in user
-      .addCase(checkUserLoggedIn.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
       .addCase(checkUserLoggedIn.fulfilled, (state, action) => {
-        state.isLoading = false;
         state.user = action.payload;
         state.isSessionChecked = true;
       })
       .addCase(checkUserLoggedIn.rejected, (state, action) => {
-        state.isLoading = false;
         state.user = null;
         state.error = action.payload;
         state.isSessionChecked = false;
       })
-
-      // Logout
-      .addCase(logoutFirebase.pending, (state) => {
-        state.isLoading = true;
-      })
       .addCase(logoutFirebase.fulfilled, (state) => {
-        state.isLoading = false;
         state.user = null;
+        state.isLoading = false;
       })
-      .addCase(logoutFirebase.rejected, (state, action) => {
+      .addCase(getPosts.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getPosts.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.posts = action.payload;
+      })
+      .addCase(getPosts.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-      });
+      })
+      .addCase(getAllUsers.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getAllUsers.fulfilled, (state, action) => {
+        state.isLoading = false;
+        // Transform array of users to object with email as key
+        state.allUserDetails = Array.isArray(action.payload)
+          ? action.payload.reduce((acc, user) => {
+              const { email, ...rest } = user;
+              if (email) acc[email] = rest;
+              return acc;
+            }, {})
+          : {};
+      })
+      .addCase(getAllUsers.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
   },
 });
 
-export const { clearError } = appSlice.actions;
+export const { clearError, searchPost } = appSlice.actions;
 export default appSlice.reducer;

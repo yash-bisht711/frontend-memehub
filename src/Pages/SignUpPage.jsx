@@ -11,6 +11,8 @@ const SignupPage = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState(''); // New state for user name
+  const [profilePicture, setProfilePicture] = useState(null); // New state for profile picture
 
   useEffect(() => {
     if (error) {
@@ -26,7 +28,15 @@ const SignupPage = () => {
 
   const handleSignup = (e) => {
     e.preventDefault();
-    dispatch(signUpWithFirebase({ email, password }));
+    // Dispatch the signup action with name and profile picture
+    dispatch(signUpWithFirebase({ email, password, name, profilePicture }));
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setProfilePicture(file);
+    }
   };
 
   return (
@@ -39,6 +49,16 @@ const SignupPage = () => {
         )}
 
         <form onSubmit={handleSignup} className="space-y-4">
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            placeholder="Full Name"
+            className="w-full p-2 rounded bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600"
+            disabled={isLoading}
+          />
+
           <input
             type="email"
             value={email}
@@ -55,6 +75,14 @@ const SignupPage = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
             placeholder="Password"
+            className="w-full p-2 rounded bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600"
+            disabled={isLoading}
+          />
+
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
             className="w-full p-2 rounded bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600"
             disabled={isLoading}
           />
