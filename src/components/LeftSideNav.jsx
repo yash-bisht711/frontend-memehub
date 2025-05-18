@@ -3,15 +3,15 @@ import { NavLink } from "react-router-dom";
 function LeftSideNav() {
 
     const navItems = [
-        { name: "Feed", path: "/" },
+        { name: "Home Page", path: "/" },
         { name: "Create Meme", path: "/Create" },
-        { name: "Dashboard", path: "/dashboard" },
+        { name: "User Dashboard", path: "/dashboard" },
     ];
 
     const topFilter = [
-        { name: "Top 24h", path: "/top/today" },
-        { name: "Top This Week", path: "/top/week" },
-        { name: "Top All Time", path: "/top/*" },
+        { name: "Top (24h)", path: "/top/today" },
+        { name: "Top (Week)", path: "/top/week" },
+        { name: "Top (All Time) ", path: "/top/*" },
     ];
 
     return (
