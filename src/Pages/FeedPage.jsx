@@ -1,14 +1,13 @@
 import React from "react";
 import MemeCard from "../components/Memecard";
 import MainBody from "../components/MainBody";
-import { MemesData } from "../componenets/util/RawData";
 import { useSelector } from "react-redux";
 
 function FeedPage() {
-  const { search } = useSelector(state => state.app)
+  const { posts, search } = useSelector(state => state.app)
 
   const filter = () => {
-    return MemesData.filter(meme => {
+    return posts.filter(meme => {
       if (search == '') return true
 
       return meme.tags.join(', ').toLowerCase().includes(search.toLowerCase())

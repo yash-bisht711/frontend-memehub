@@ -40,8 +40,8 @@ function TopPage() {
         <MainBody>
             {posts.map((meme) => (
                 
-                <h1>{meme.description}</h1>
-                // <MemeCard key={meme.id} meme={meme} />
+                // <h1>{meme.description}</h1>
+                <MemeCard key={meme.id} meme={meme} />
             ))}
         </MainBody>
     )

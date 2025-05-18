@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import FeedPage from "./Pages/FeedPage";
 import CreateMemePage from "./Pages/CreateMemePage";
@@ -10,8 +10,20 @@ import "./App.css";
 import LoginPage from "./Pages/LoginPage";
 import SignupPage from "./Pages/SignUpPage";
 import TopPage from "./Pages/TopPage";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUsers, getPosts } from "./redux/AppSlice";
 
 function App() {
+  const { posts } = useSelector(state => state.app)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getPosts())
+    dispatch(getAllUsers())
+  }, [])
+
+  useEffect(() => console.log(posts), [posts])
+
   return (
     <Router>
       <Navigation />
