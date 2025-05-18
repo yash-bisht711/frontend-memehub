@@ -9,9 +9,9 @@ function LeftSideNav() {
     ];
 
     const topFilter = [
-        { name: "Top 24h", path: "/top/today" },
-        { name: "Top This Week", path: "/top/week" },
-        { name: "Top All Time", path: "/top/*" },
+        { name: "Top (24h)", path: "/top/today" },
+        { name: "Top (Week)", path: "/top/week" },
+        { name: "Top (All Time) ", path: "/top/*" },
     ];
 
     return (

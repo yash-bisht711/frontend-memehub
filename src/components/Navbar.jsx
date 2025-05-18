@@ -50,7 +50,7 @@ function Navigation() {
           className="bg-primary-a10 p-2 px-3 rounded-3xl text-white font-semibold flex justify-center items-center hover:bg-primary-a0"
           type="button"
         >
-          Logout
+          LogOut
         </button>
       ) : (
         <Link
