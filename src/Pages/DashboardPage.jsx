@@ -1,11 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MemeCard from "../componenets/DashboardMemeCard";
-import { MemesData } from "../componenets/util/RawData";
 
 const UserDashboard = () => {
-  const [memes, setMemes] = useState(MemesData);
+  const [memes, setMemes] = useState([]);
   const [sortBy, setSortBy] = useState("date");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  useEffect(() => {
+    fetch("https://backend-memehub-production.up.railway.app/api/posts/")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch memes");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setMemes(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
 
   const sortedMemes = [...memes].sort((a, b) => {
     if (sortBy === "date") return b.createdAt - a.createdAt;
@@ -21,6 +39,9 @@ const UserDashboard = () => {
     console.log("Editing meme:", meme);
     // Navigate to editor or open a modal
   };
+
+  if (loading) return <p className="p-6 text-white">Loading memes...</p>;
+  if (error) return <p className="p-6 text-red-500">Error: {error}</p>;
 
   return (
     <div className="p-6 text-white">
