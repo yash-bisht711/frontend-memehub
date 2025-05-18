@@ -9,6 +9,7 @@ const initialState = {
   error: null,
   user: null,
   isSessionChecked: false,
+  search: '',
 };
 
 const getFriendlyError = (error) => {
@@ -60,12 +61,12 @@ export const checkUserLoggedIn = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const user = auth.currentUser;
-      return {
+      return user ? {
         uid: user.uid,
         email: user.email,
         displayName: user.displayName,
         photoURL: user.photoURL,
-      } || null;
+      } : null;
     } catch (error) {
       return rejectWithValue(getFriendlyError(error));
     }
@@ -91,6 +92,9 @@ const appSlice = createSlice({
     clearError(state) {
       state.error = null;
     },
+    searchPost(state, action) {
+      state.search = action.payload
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -134,5 +138,5 @@ const appSlice = createSlice({
   },
 });
 
-export const { clearError } = appSlice.actions;
+export const { clearError, searchPost } = appSlice.actions;
 export default appSlice.reducer;
