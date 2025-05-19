@@ -29,7 +29,7 @@ function Navigation() {
   return (
     <nav className="bg-surface-a0/90 backdrop-blur border-b border-surface-a30 shadow sticky top-0 z-50 p-2 px-6 flex justify-between">
       <Link to="/" className="text-2xl font-bold text-primary-a10 flex gap-2">
-        <img src="../../../memeStream_favicon.svg" alt="" sizes="" className="h-8 w-8"/>
+        <img src="../../../memeStream_favicon.svg" alt="img_memestream.jpg" sizes="" className="h-8 w-8"/>
         <h5>Meme Stream</h5>
       </Link>
 
