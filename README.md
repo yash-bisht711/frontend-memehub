@@ -1,4 +1,4 @@
-# Meme Strem — Frontend
+# Meme Stream — Frontend
 
 ## Overview
 
@@ -115,5 +115,11 @@ src/
 * Meme performance analytics visualization is minimal for now
 * Some UI components may require responsiveness improvements
 * Backend integration needs to support all interaction features fully
+
+---
+
+## Backend Github Repository
+
+[Meme-Stream Backend](https://github.com/yash-bisht711/backend-Memehub/tree/README)
 
 ---
